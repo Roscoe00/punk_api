@@ -1,7 +1,11 @@
+import SearchBox from '../SearchBox/SearchBox';
 
-const Navbar = ()=>{
-   return( <form>
-      <input type="text" placeholder="Search"/>
+
+const Navbar = props => {
+   const { label, searchTerm, handleInput } = props;
+
+   return (<form>
+      <SearchBox label={label} seacherTerm={searchTerm} handleInput={handleInput} />
    </form>)
 }
 
