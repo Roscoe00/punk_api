@@ -8,46 +8,43 @@ import React, { useState, useEffect } from "react";
 const App = () => {
 
    const [beerArray, setBeerArray] = useState([]);
-
-
-   useEffect(() => {
-      const URL = `https://api.punkapi.com/v2/beers/`
-      fetch(URL).then(response => {
-         return response.json();
-      }).then(beerArray => {
-         // console.log(beerArray)
-         setBeerArray(beerArray)
-      })
-   }, [])
-
-
    const [searchTerm, setSearchTerm] = useState("");
+
 
    const handleInput = event => {
       const cleanInput = event.target.value.toLowerCase();
-      console.log(cleanInput)
+      // console.log(cleanInput)
       setSearchTerm(cleanInput);
    };
 
-   const filteredBeers = beerArray.filter(beer => {
-      const beerNameLower = beer.name.toLowerCase();
-      return beerNameLower.includes(searchTerm)
-   });
-   console.log(filteredBeers)
 
+   useEffect(() => {
+      if (searchTerm === "") {
+         const URL = `https://api.punkapi.com/v2/beers/`
+         fetch(URL).then(response => {
+            return response.json();
+         }).then(beerArray => {
+            // console.log(beerArray)
+            setBeerArray(beerArray)
+         })
+      } else {
+         const NewURL = `https://api.punkapi.com/v2/beers?beer_name=${searchTerm}`;
+         fetch(NewURL).then(response => {
+            return response.json();
+         }).then(beerArray => {
+            // console.log(beerArray)
+            setBeerArray(beerArray)
+         })
 
+      }
+   }, [searchTerm])
 
-   const CardListJSX = filteredBeers.map((beer) => (
-      <div className={"beerCard beerCard__" + beer.id} key={"beer" + beer.id}>
-         <CardList image={beer.image_url} beerBrand={beer.name} beerDesc={beer.description} />
-      </div>
-   ))
-
+   console.log(beerArray)
 
    return (
       <div className="App">
          <Navbar label={"beers"} seacherTerm={searchTerm} handleInput={handleInput} />
-         {CardListJSX}
+         <CardList beerArray={beerArray} />
       </div>
    );
 }
