@@ -9,41 +9,66 @@ const App = () => {
 
    const [beerArray, setBeerArray] = useState([]);
    const [searchTerm, setSearchTerm] = useState("");
-
-
-   const handleInput = event => {
-      const cleanInput = event.target.value.toLowerCase();
-      // console.log(cleanInput)
-      setSearchTerm(cleanInput);
-   };
+   const [searchABV, setsearchABV] = useState("");
+   const [searchClassic, setSearchClassic] = useState("");
+   const [searchAcidic, setSearchAcidic] = useState("");
 
 
    useEffect(() => {
-      if (searchTerm === "") {
-         const URL = `https://api.punkapi.com/v2/beers/`
-         fetch(URL).then(response => {
-            return response.json();
-         }).then(beerArray => {
+      const URL = `https://api.punkapi.com/v2/beers?per_page=40${searchTerm}${searchABV}${searchClassic}`
+      fetch(URL).then(response => {
+         return response.json();
+      }).then(beerArray => {
+         if (searchAcidic === "filter") {
+            setBeerArray(beerArray.filter(beer => beer.ph < 4))
+         } else {
             // console.log(beerArray)
             setBeerArray(beerArray)
-         })
+         }
+      })
+   }, [searchTerm, searchABV, searchClassic, searchAcidic])
+
+
+   const handleInput = event => {
+      if (event.target.value === "") {
+         setSearchTerm("");
       } else {
-         const NewURL = `https://api.punkapi.com/v2/beers?beer_name=${searchTerm}`;
-         fetch(NewURL).then(response => {
-            return response.json();
-         }).then(beerArray => {
-            // console.log(beerArray)
-            setBeerArray(beerArray)
-         })
-
+         const cleanInput = event.target.value.toLowerCase().replace(" ", "_");
+         console.log(cleanInput)
+         setSearchTerm("&beer_name=" + cleanInput);
       }
-   }, [searchTerm])
+   };
 
+   const handleClick = (search, setSearch, pagination) => {
+      if (search === "") {
+         setSearch(pagination)
+      } else if (search === pagination) {
+         setSearch("")
+      }
+   }
+
+   const filterABV = () => {
+      handleClick(searchABV, setsearchABV, "&abv_gt=6")
+   }
+
+   const filterClassic = () => {
+      handleClick(searchClassic, setSearchClassic, "&brewed_before=01-2010")
+   }
+
+   const filterPh = () => {
+      handleClick(searchAcidic, setSearchAcidic, "filter")
+   }
+
+
+
+
+
+   console.log(filterPh)
    console.log(beerArray)
 
    return (
       <div className="App">
-         <Navbar label={"beers"} seacherTerm={searchTerm} handleInput={handleInput} />
+         <Navbar label={"beers"} seacherTerm={searchTerm} handleInput={handleInput} filterABV={filterABV} filterClassic={filterClassic} filterPh={filterPh} />
          <CardList beerArray={beerArray} />
       </div>
    );
