@@ -1,4 +1,67 @@
+@use "../../assets/sass/variables"as *;
+
 .beerCard {
    display: inline-block;
-   width: 280px;
+   width: 18rem;
+   padding: 0.5rem;
+   border: 0.5rem solid $primaryBoxColor;
+   border-radius: 10%;
+   margin-bottom: 1.5rem;
+   background-color: $secondaryBoxColor;
+}
+
+.completed-card {
+   margin: auto;
+   width: 320px;
+}
+
+@media screen and (min-width: 768px) {
+   .beerCard {
+      margin: 1rem;
+
+   }
+
+   .completed-card {
+      margin: auto;
+      width: 740px;
+   }
+}
+
+@media screen and (min-width: 1024px) {
+   .beerCard {
+      margin: 1rem;
+      width: 17rem;
+
+   }
+
+   .completed-card {
+      margin: 2rem auto;
+
+   }
+}
+
+@media screen and (min-width: 1440px) {
+   .beerCard {
+      margin: 1rem;
+      width: 17rem;
+
+   }
+
+   .completed-card {
+      margin: 2rem auto;
+      width: 1020px;
+   }
+}
+
+@media screen and (min-width: 1680px) {
+   .beerCard {
+      margin: 1rem;
+      width: 17rem;
+
+   }
+
+   .completed-card {
+      margin: 2rem auto;
+      width: 1440px;
+   }
 }

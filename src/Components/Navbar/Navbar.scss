@@ -1,0 +1,40 @@
+@use "../../assets/sass/variables"as *;
+
+.nav {
+   display: grid;
+   grid-template-rows: auto;
+   grid-template-columns: 1.5rem 16rem;
+   align-items: center;
+   padding-top: 2rem;
+   // border: 0.8rem solid $primaryBoxColor;
+   background-color: $secondaryBoxColor;
+   border-bottom: 0.8rem solid $primaryBoxColor;
+   width: 100%;
+
+
+
+   * {
+      margin: 0.5rem;
+   }
+
+
+
+   &__search,
+   &__title {
+      grid-column: 1 / 3;
+   }
+
+}
+
+@media screen and (min-width: 1024px) {
+   .App {
+      flex-direction: row;
+      align-items: flex-start;
+   }
+
+   .nav {
+      padding-bottom: 100%;
+      border-right: 0.8rem solid $primaryBoxColor;
+      width: 18rem;
+   }
+}

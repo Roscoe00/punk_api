@@ -1,15 +1,16 @@
 import React from "react";
 import "./CardList.scss";
-import Card from "../../Components/main/Card/Card";
+import Card from "../../Components/Card/Card";
 
 
 const CardList = props => {
 
    const { beerArray } = props;
 
+
    const CardListJSX = beerArray.map((beer) => (
       <div className={"beerCard beerCard__" + beer.id} key={"beer" + beer.id}>
-         <Card image={beer.image_url} beerBrand={beer.name} beerDesc={beer.description} />
+         <Card image={beer.image_url} beerBrand={beer.name} beerDesc={beer.tagline} />
       </div>
    ))
 
