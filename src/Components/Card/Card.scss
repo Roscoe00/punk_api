@@ -2,10 +2,12 @@
    display: flex;
    flex-direction: column;
    align-items: center;
-   justify-content: space-evenly;
+   justify-content: end;
+   height: 30rem;
+   gap: 0.5rem;
 
    &__image {
-      width: 100px;
-      height: auto;
+      height: 25rem;
+      width: auto;
    }
 }
